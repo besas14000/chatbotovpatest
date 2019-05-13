@@ -1,0 +1,450 @@
+{
+  "name": "chatbotOvpa",
+  "intents": [
+    {
+      "intent": "audio_issue",
+      "examples": [
+        {
+          "text": "issue with sound"
+        },
+        {
+          "text": "pb audio"
+        },
+        {
+          "text": "pb son"
+        },
+        {
+          "text": "sound issue"
+        },
+        {
+          "text": "audio issue"
+        },
+        {
+          "text": "Les autres participants ne peuvent pas m'entendre"
+        },
+        {
+          "text": "Je n'entends pas les autres participants"
+        },
+        {
+          "text": "problème micro"
+        },
+        {
+          "text": "microphone"
+        },
+        {
+          "text": "problem micro"
+        },
+        {
+          "text": "micro"
+        },
+        {
+          "text": "I don't hear participants"
+        },
+        {
+          "text": "No sound"
+        }
+      ],
+      "description": "question about audio  issues during video conferencing"
+    },
+    {
+      "intent": "conference",
+      "examples": [
+        {
+          "text": "conference"
+        },
+        {
+          "text": "conférence"
+        },
+        {
+          "text": "join a conference"
+        },
+        {
+          "text": "join a meeting"
+        },
+        {
+          "text": "invite un participant"
+        }
+      ],
+      "description": "Send email to an user to join a conference"
+    },
+    {
+      "intent": "video_issue",
+      "examples": [
+        {
+          "text": "qualité vidéo"
+        },
+        {
+          "text": "video quality"
+        },
+        {
+          "text": "problème vidéo"
+        },
+        {
+          "text": "Video issue"
+        },
+        {
+          "text": "video"
+        },
+        {
+          "text": "vidéo"
+        }
+      ],
+      "description": "question about video issues during video conferencing"
+    }
+  ],
+  "entities": [
+    {
+      "entity": "No",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Non",
+          "synonyms": [
+            "N"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "No",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "Yes",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Oui",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Y",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "O",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Yes",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "userInfo",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "email",
+          "patterns": [
+            "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "language": "fr",
+  "metadata": {
+    "api_version": {
+      "major_version": "v1",
+      "minor_version": "2018-07-10"
+    }
+  },
+  "description": "",
+  "dialog_nodes": [
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "Tout le reste",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "variable": "$mail",
+      "dialog_node": "slot_1_1551784228469"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Pouvez-vous reformuler votre demande ?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1553007679776",
+      "metadata": {},
+      "conditions": "@No",
+      "dialog_node": "node_2_1553159873754",
+      "previous_sibling": "node_1_1553157851023"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Vérifiez si le bon microphone est sélectionné dans le logiciel. \nEn V2 pour accéder au menu \"Control\":\nCliquez dans le menu à gauche, sur les \"...\" situés à droite de votre numéro de conférence.\nCliquez sur le menu \"Select media devices\"\nCliquez sur l'icone microphone puis sélectionnez le microphone à utiliser pour la conférence\nEn V1, cliquez sur le bouton de configuration dans le coin inférieur à droite de l'écran et sélectionnez le bon micro. "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "parent": "node_1_1553007679776",
+      "metadata": {},
+      "conditions": "@Yes",
+      "dialog_node": "node_1_1553157851023"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Pouvez-vous reformuler votre demande ?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_5_1553161496779",
+      "metadata": {},
+      "conditions": "@No",
+      "dialog_node": "node_7_1553161609487",
+      "previous_sibling": "node_6_1553161542461"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Si la vidéo se fige, que l’image est pixélisée ou floue, votre connexion Internet (ou la connexion Internet d’un autre participant) est peut-être à l’origine du problème. Si notre solution détecte une mauvaise connexion, le programme réduit la qualité pour éviter une interruption de l’appel. Assurez-vous qu’il y a suffisamment de lumière ambiante et évitez le contre-jour."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_5_1553161496779",
+      "metadata": {},
+      "conditions": "@Yes",
+      "dialog_node": "node_6_1553161542461"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_1_1551784228469",
+      "context": {
+        "mail": "@userInfo.literal"
+      },
+      "metadata": {},
+      "conditions": "@userInfo.literal",
+      "event_name": "input",
+      "dialog_node": "handler_2_1551784228469",
+      "previous_sibling": "handler_3_1551784228469"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Un email pour rejoindre la conférence a été envoyé à $mail"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_1_1551784228469",
+      "actions": [
+        {
+          "name": "/BESAS14_dev/inviteparticipantfe",
+          "type": "server",
+          "parameters": {
+            "conf": "$my_conferencenumber",
+            "email": "$mail"
+          },
+          "credentials": "$my_credentials",
+          "result_variable": "result"
+        }
+      ],
+      "metadata": {},
+      "event_name": "filled",
+      "dialog_node": "handler_6_1551784342013",
+      "previous_sibling": "handler_2_1551784228469"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "Quelle est l'adresse mail de la personne à inviter ?"
+      },
+      "parent": "slot_1_1551784228469",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_3_1551784228469"
+    },
+    {
+      "type": "standard",
+      "title": "Reset context",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {
+        "mail": null
+      },
+      "metadata": {},
+      "dialog_node": "node_1_1552575526769",
+      "previous_sibling": "Tout le reste"
+    },
+    {
+      "type": "standard",
+      "title": "Video issue",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Avez-vous un problème de qualité vidéo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "#video_issue",
+      "dialog_node": "node_5_1553161496779",
+      "previous_sibling": "node_1_1553007679776"
+    },
+    {
+      "type": "standard",
+      "title": "Micro issue",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Avez-vous un problème de son ?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "#audio_issue",
+      "dialog_node": "node_1_1553007679776",
+      "previous_sibling": "node_1_1552575526769"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Je ne vous ai pas compris, retentez votre chance"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "anything_else",
+      "dialog_node": "node_1_1557240563126",
+      "previous_sibling": "node_5_1553161496779"
+    },
+    {
+      "type": "frame",
+      "title": "invite a new participant to a conference",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Un email pour rejoindre la conférence a été envoyé à  <? $mail ?>"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {
+        "fallback": "leave"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_1_1552575526769"
+      },
+      "conditions": "#conference",
+      "digress_in": "does_not_return",
+      "dialog_node": "Tout le reste",
+      "digress_out": "allow_all",
+      "previous_sibling": "Bienvenue",
+      "digress_out_slots": "not_allowed"
+    },
+    {
+      "type": "standard",
+      "title": "Bienvenue",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Bonjour, comment puis-je vous aider ?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "welcome",
+      "dialog_node": "Bienvenue"
+    }
+  ],
+  "workspace_id": "4e6646bc-9188-4280-b4ab-9064be70a83c",
+  "counterexamples": [],
+  "system_settings": {
+    "tooling": {
+      "store_generic_responses": true
+    }
+  },
+  "learning_opt_out": false,
+  "status": "Available"
+}
